@@ -2,3 +2,4 @@ test-mails
 *.pyc
 t.py
 jieba
+words.txt
