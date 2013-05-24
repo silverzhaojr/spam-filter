@@ -40,3 +40,15 @@ class HTMLToText():
 		self.parser.close()
 		return self.parser.get_text()
 
+import sys
+
+def main():
+	fp = open(sys.argv[1], 'r')
+	s = ''.join(fp.readlines())
+	fp.close()
+	s = HTMLToText(s.decode('utf-8')).get_text().encode('utf-8')
+	print s
+
+if __name__ == '__main__':
+	main()
+
