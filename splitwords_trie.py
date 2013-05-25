@@ -67,7 +67,7 @@ class SplitWords:
 
 	def get_word_list(self):
 		res = []
-		chars = self.REGEX.findall(self.content.encode('utf-8'))
+		chars = self.REGEX.findall(self.content)
 		trie = self.words_to_trie()
 		self.search_in_trie(chars, trie, res)
 		res = list(set(res))
@@ -77,7 +77,7 @@ def main():
 	content = '''
 	毕业论文攻坚阶段，请保持手机畅通，经常查看邮件，随时和导师进行联系和沟通。随意，淡漠，不积极主动必定给自己的顺利毕业蒙上一层阴霾。
 	'''
-	word_list = SplitWords(content.decode('utf-8')).get_word_list()
+	word_list = SplitWords(content).get_word_list()
 	print '/'.join(word_list)
 
 if __name__ == '__main__':

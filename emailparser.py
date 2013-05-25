@@ -1,6 +1,7 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
 
+import re
 import email
 from htmltotext import HTMLToText
 
@@ -23,8 +24,7 @@ class EmailParser():
 					plain_text += HTMLToText(content_text).get_text().encode('utf-8')
 				else:
 					plain_text += content_text.encode('utf-8')
-				#plain_text += '\n' + '*' * 30 + '\n'
-		return plain_text
+		return re.sub('\s+',' ', plain_text)
 
 import sys
 import re
@@ -32,7 +32,6 @@ import re
 def main():
 	fp = open(sys.argv[1], 'r')
 	s = EmailParser(fp).get_mail_content()
-	s = re.sub('\s+','\n', s)
 	print s
 	fp.close()
 
