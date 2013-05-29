@@ -28,7 +28,9 @@ class JudgeMail:
 		mail_content = EmailParser(self.mail_file).get_mail_content()
 		res_list = SplitWords(mail_content).get_word_list()
 		word_list = list(set(res_list))
-		for i in [';', '', ' ', ':', '.', '。', '：', '，', ' ', '!', '（', '）', '(', ')','！','、']:
+		for i in \
+[';', ':', ',', '.', '?', '!', '(', ')', ' ', '/',\
+ '；', '：', '，', '。', '？', '！', '（', '）', '　', '、']:
 			if i in word_list:
 				word_list.remove(i)
 
@@ -66,7 +68,7 @@ def main():
 	fp = open(sys.argv[1], 'r')
 	p = JudgeMail(fp).judge()
 	fp.close()
-	
+
 	print 'SPAM: p = ', p
 
 if __name__ == '__main__':
