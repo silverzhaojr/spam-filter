@@ -11,10 +11,17 @@ class EmailParser():
 	analyze an email file .eml
 	"""
 
-	def __init__(self, mail):
+	def __init__(self, mail, is_given_mail=False):
 		self.mail = mail
+		self.is_given_mail = is_given_mail
 
 	def get_mail_content(self):
+		if (self.is_given_mail):
+			fp = self.mail.read()
+			content = fp[fp.index('\n\n')::]
+			plain_text = content.decode('gbk').encode('utf-8')
+			return re.sub('\s+', ' ', plain_text)
+
 		msg = email.message_from_file(self.mail)
 		plain_text = ''
 		for part in msg.walk():
@@ -32,6 +39,7 @@ import re
 def main():
 	fp = open(sys.argv[1], 'r')
 	s = EmailParser(fp).get_mail_content()
+#	s = EmailParser(fp, True).get_mail_content()
 	print s
 	fp.close()
 

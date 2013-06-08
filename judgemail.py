@@ -11,8 +11,10 @@ class JudgeMail:
 	calculate the possibility of being a spam
 	'''
 
-	def __init__(self, mail_file):
+	def __init__(self, mail_file, is_given_mail=False):
 		self.mail_file = mail_file
+		self.is_given_mail = is_given_mail
+
 		self.train_module = TrainModule()
 
 		self.P_SPAM = 0.5
@@ -25,11 +27,13 @@ class JudgeMail:
 		self.train_module.set_dic_word_freq()
 
 	def judge(self):
-		mail_content = EmailParser(self.mail_file).get_mail_content()
+		mail_content = EmailParser(self.mail_file, self.is_given_mail).get_mail_content()
+
 		res_list = SplitWords(mail_content).get_word_list()
 		word_list = list(set(res_list))
 		for i in \
-[';', ':', ',', '.', '?', '!', '(', ')', ' ', '/',\
+[';', ':', ',', '.', '?', '!', '(', ')', ' ', '/', '@',\
+'+', '-', '=', '*', \
  '；', '：', '，', '。', '？', '！', '（', '）', '　', '、']:
 			if i in word_list:
 				word_list.remove(i)
@@ -66,7 +70,7 @@ class JudgeMail:
 
 def main():
 	fp = open(sys.argv[1], 'r')
-	p = JudgeMail(fp).judge()
+	p = JudgeMail(fp, True).judge()
 	fp.close()
 
 	print 'SPAM: p = ', p
