@@ -33,7 +33,7 @@ class JudgeMail:
 		word_list = list(set(res_list))
 		for i in \
 [';', ':', ',', '.', '?', '!', '(', ')', ' ', '/', '@',\
-'+', '-', '=', '*', \
+'+', '-', '=', '*', '“', '”', \
  '；', '：', '，', '。', '？', '！', '（', '）', '　', '、']:
 			if i in word_list:
 				word_list.remove(i)
@@ -53,12 +53,12 @@ class JudgeMail:
 
 		p = 1.0
 		rest_p = 1.0
+		k = 1.0
 		for i in word_freq_most:
 			print i[0], i[1]
-			p *= i[1]
-			rest_p *= (1 - i[1])
+			k *= 1.0 / i[1] - 1
 
-		p_spam = p / (p + rest_p)
+		p_spam = 1 / (1 + k)
 		mail_type = ''
 		if p_spam > self.P_IS_SPAM_LIMIT:
 			mail_type = 'spam'

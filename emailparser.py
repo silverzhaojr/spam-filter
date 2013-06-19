@@ -38,8 +38,8 @@ import re
 
 def main():
 	fp = open(sys.argv[1], 'r')
-	s = EmailParser(fp).get_mail_content()
-#	s = EmailParser(fp, True).get_mail_content()
+#	s = EmailParser(fp).get_mail_content()
+	s = EmailParser(fp, True).get_mail_content()
 	print s
 	fp.close()
 
